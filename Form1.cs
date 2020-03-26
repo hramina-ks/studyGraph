@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Drawing2D;
 
 namespace studyGraph
 {
@@ -17,17 +18,20 @@ namespace studyGraph
         Bitmap snapshot, tempDraw; //снимки экрана
         Color foreColor; //цвет
         int lineWidth; //ширина линий
-        string selectedTool; 
+        string selectedTool;
+        SmoothingMode smooth = SmoothingMode.Default;
+        string smoothName;
 
         public FormMain()
         {
             InitializeComponent();
             snapshot = new Bitmap(pictureBox.ClientRectangle.Width, pictureBox.ClientRectangle.Height);
             tempDraw = (Bitmap)snapshot.Clone();
-            ForeColor = Color.Black;
+            foreColor = Color.Black;
             lineWidth = 2;
             Pencil.Checked = true;
             selectedTool = "Pencil";
+            toolStripComboBox.SelectedIndex = 0;
         }
 
         private void Tool_Click(object sender, EventArgs e)
@@ -43,6 +47,43 @@ namespace studyGraph
         private void quitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void smooth_click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem itemClicked = sender as ToolStripMenuItem;
+            smoothName = itemClicked.Name;
+            switch (smoothName)
+            {
+                case "noneSmooth":
+                    smooth = SmoothingMode.None;
+                    break;
+                case "highSpeedSmooth":
+                    smooth = SmoothingMode.HighSpeed;
+                    break;
+                case "antiAliasSmooth":
+                    smooth = SmoothingMode.AntiAlias;
+                    break;
+                case "highQualitySmooth":
+                    smooth = SmoothingMode.HighQuality;
+                    break;
+                default:
+                    smooth = SmoothingMode.Default;
+                    break;
+            }
+        }
+
+        private void editingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                foreColor = colorDialog.Color;
+            }
+        }
+
+        private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lineWidth = int.Parse(toolStripComboBox.SelectedItem.ToString().Remove(1));
         }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -75,6 +116,7 @@ namespace studyGraph
             if (selectedTool != "Pencil")
                 tempDraw = (Bitmap)snapshot.Clone();
             Graphics g = Graphics.FromImage(tempDraw);
+            g.SmoothingMode = smooth;
             Pen myPen = new Pen(foreColor, lineWidth);
             switch (selectedTool)
             {

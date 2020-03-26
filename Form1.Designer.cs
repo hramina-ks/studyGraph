@@ -35,6 +35,11 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.quitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smoothingMode = new System.Windows.Forms.ToolStripMenuItem();
+            this.noneSmooth = new System.Windows.Forms.ToolStripMenuItem();
+            this.highSpeedSmooth = new System.Windows.Forms.ToolStripMenuItem();
+            this.antiAliasSmooth = new System.Windows.Forms.ToolStripMenuItem();
+            this.highQualitySmooth = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +48,10 @@
             this.Rectangle = new System.Windows.Forms.ToolStripButton();
             this.Pencil = new System.Windows.Forms.ToolStripButton();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.toolStripComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.menuStrip1.SuspendLayout();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
@@ -77,7 +86,7 @@
             // 
             this.createToolStripMenuItem.Image = global::studyGraph.Properties.Resources.icons8_файл_16;
             this.createToolStripMenuItem.Name = "createToolStripMenuItem";
-            this.createToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.createToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.createToolStripMenuItem.Text = "Создать";
             // 
             // saveToolStripMenuItem
@@ -96,16 +105,57 @@
             // 
             this.quitToolStripMenuItem.Image = global::studyGraph.Properties.Resources.icons8_знак_выхода_16;
             this.quitToolStripMenuItem.Name = "quitToolStripMenuItem";
-            this.quitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.quitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.quitToolStripMenuItem.Text = "Выйти";
             this.quitToolStripMenuItem.Click += new System.EventHandler(this.quitToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smoothingMode});
             this.editToolStripMenuItem.Image = global::studyGraph.Properties.Resources.icons8_редактировать_16;
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.editToolStripMenuItem.Text = "Правка";
+            // 
+            // smoothingMode
+            // 
+            this.smoothingMode.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noneSmooth,
+            this.highSpeedSmooth,
+            this.antiAliasSmooth,
+            this.highQualitySmooth});
+            this.smoothingMode.Name = "smoothingMode";
+            this.smoothingMode.Size = new System.Drawing.Size(180, 22);
+            this.smoothingMode.Text = "Сглаживание";
+            // 
+            // noneSmooth
+            // 
+            this.noneSmooth.Name = "noneSmooth";
+            this.noneSmooth.Size = new System.Drawing.Size(181, 22);
+            this.noneSmooth.Text = "Без сглаживания";
+            this.noneSmooth.Click += new System.EventHandler(this.smooth_click);
+            // 
+            // highSpeedSmooth
+            // 
+            this.highSpeedSmooth.Name = "highSpeedSmooth";
+            this.highSpeedSmooth.Size = new System.Drawing.Size(181, 22);
+            this.highSpeedSmooth.Text = "Быстрое";
+            this.highSpeedSmooth.Click += new System.EventHandler(this.smooth_click);
+            // 
+            // antiAliasSmooth
+            // 
+            this.antiAliasSmooth.Name = "antiAliasSmooth";
+            this.antiAliasSmooth.Size = new System.Drawing.Size(181, 22);
+            this.antiAliasSmooth.Text = "Среднее";
+            this.antiAliasSmooth.Click += new System.EventHandler(this.smooth_click);
+            // 
+            // highQualitySmooth
+            // 
+            this.highQualitySmooth.Name = "highQualitySmooth";
+            this.highQualitySmooth.Size = new System.Drawing.Size(181, 22);
+            this.highQualitySmooth.Text = "Высокое качество";
+            this.highQualitySmooth.Click += new System.EventHandler(this.smooth_click);
             // 
             // viewToolStripMenuItem
             // 
@@ -127,15 +177,17 @@
             // 
             this.editingToolStripMenuItem.Image = global::studyGraph.Properties.Resources.icons8_rgb_круг_2_16;
             this.editingToolStripMenuItem.Name = "editingToolStripMenuItem";
-            this.editingToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.editingToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.editingToolStripMenuItem.Text = "Редактировать...";
+            this.editingToolStripMenuItem.Click += new System.EventHandler(this.editingToolStripMenuItem_Click);
             // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Line,
             this.Rectangle,
-            this.Pencil});
+            this.Pencil,
+            this.toolStripComboBox});
             this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(784, 25);
@@ -185,6 +237,22 @@
             this.pictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseMove);
             this.pictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
             // 
+            // openFileDialog
+            // 
+            this.openFileDialog.FileName = "openFileDialog1";
+            // 
+            // toolStripComboBox
+            // 
+            this.toolStripComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBox.Items.AddRange(new object[] {
+            "1 пиксель",
+            "2 пикселя",
+            "4 пикселя",
+            "8 пикселей"});
+            this.toolStripComboBox.Name = "toolStripComboBox";
+            this.toolStripComboBox.Size = new System.Drawing.Size(121, 25);
+            this.toolStripComboBox.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBox1_SelectedIndexChanged);
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +291,15 @@
         private System.Windows.Forms.ToolStripButton Line;
         private System.Windows.Forms.ToolStripButton Rectangle;
         private System.Windows.Forms.ToolStripButton Pencil;
+        private System.Windows.Forms.ToolStripMenuItem smoothingMode;
+        private System.Windows.Forms.ToolStripMenuItem noneSmooth;
+        private System.Windows.Forms.ToolStripMenuItem highSpeedSmooth;
+        private System.Windows.Forms.ToolStripMenuItem antiAliasSmooth;
+        private System.Windows.Forms.ToolStripMenuItem highQualitySmooth;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox;
     }
 }
 
