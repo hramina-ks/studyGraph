@@ -34,6 +34,7 @@ namespace studyGraph
             Rectangle.Checked = false;
             Pencil.Checked = false;
             GradientBrush.Checked = false;
+            Oval.Checked = false;
             ToolStripButton btnClicked = sender as ToolStripButton;
             btnClicked.Checked = true;
             selectedTool = btnClicked.Name;
@@ -201,6 +202,12 @@ namespace studyGraph
                             g.FillRectangle(linearGradientBrush, new Rectangle(x1, y1, x2 - x1, y2 - y1));
                             linearGradientBrush.Dispose();
                         }
+                    }
+                    break;
+                case "Oval":
+                    if (tempDraw != null)
+                    {
+                        g.DrawEllipse(myPen, x1, y1, x2 - x1, y2 - y1);
                     }
                     break;
                 default: break;

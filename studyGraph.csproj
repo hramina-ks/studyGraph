@@ -134,5 +134,8 @@
   <ItemGroup>
     <None Include="Resources\icons8-открыть-папку-161.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\software-shape-oval_97863.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
