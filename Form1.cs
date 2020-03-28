@@ -39,6 +39,7 @@ namespace studyGraph
             Line.Checked = false;
             Rectangle.Checked = false;
             Pencil.Checked = false;
+            GradientBrush.Checked = false;
             ToolStripButton btnClicked = sender as ToolStripButton;
             btnClicked.Checked = true;
             selectedTool = btnClicked.Name;
@@ -84,6 +85,67 @@ namespace studyGraph
         private void toolStripComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             lineWidth = int.Parse(toolStripComboBox.SelectedItem.ToString().Remove(1));
+            toolStripStatusLabel.Text = "Толщина кисти " + lineWidth.ToString();
+        }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Graphics g = pictureBox.CreateGraphics();
+            g.Clear(Color.White);
+            pictureBox.Image = null;
+            snapshot = new Bitmap(pictureBox.ClientRectangle.Width, pictureBox.ClientRectangle.Height);
+            tempDraw = (Bitmap)snapshot.Clone();
+            g.Dispose();
+        }
+
+        private void OpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image files (*.BMP, *.JPG, *.GIF, *.TIF, *.PNG, *.ICO, *.EMF, *.WMF)|*.bmp; *.jpg; *.gif; *.tif; *.png; *.ico; *.emf; *.wmf;";
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox.Image = Image.FromFile(dialog.FileName);
+                snapshot = (Bitmap)pictureBox.Image;
+                tempDraw = (Bitmap)snapshot.Clone();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog savedialog = new SaveFileDialog();
+            savedialog.Title = "Сохранить картинку как...";
+            savedialog.OverwritePrompt = true;
+            savedialog.Filter =
+                "Bitmap File(*.bmp)|*.bmp|" +
+                "GIF File(*.gif)|*.gif|" +
+                "JPEG File(*.jpg)|*.jpg|" +
+                "TIF File(*.tif)|*.tif|" +
+                "PNG File(*.png)|*.png|";
+            savedialog.ShowHelp = true;
+            if (savedialog.ShowDialog() == DialogResult.OK)
+            {
+                string fileName = savedialog.FileName;
+                string strFilExtn = fileName.Remove(0, fileName.Length - 3);
+                switch (strFilExtn)
+                {
+                    case "bmp":
+                        snapshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Bmp);
+                        break;
+                    case "jpg":
+                        snapshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Jpeg);
+                        break;
+                    case "gif":
+                        snapshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Gif);
+                        break;
+                    case "tif":
+                        snapshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Tiff);
+                        break;
+                    case "png":
+                        snapshot.Save(fileName, System.Drawing.Imaging.ImageFormat.Png);
+                        break;
+                    default: break;
+                }
+            }
         }
 
         private void pictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -134,6 +196,17 @@ namespace studyGraph
                         g.DrawLine(myPen, x1, y1, x2, y2);
                         x1 = x2;
                         y1 = y2;
+                    }
+                    break;
+                case "GradientBrush":
+                    if (tempDraw != null)
+                    {
+                        if ((x2 > x1) && (y2 > y1))
+                        {
+                            Brush linearGradientBrush = new LinearGradientBrush(new Rectangle(x1, y1, x2 - x1, y2 - y1), foreColor, Color.White, 45);
+                            g.FillRectangle(linearGradientBrush, new Rectangle(x1, y1, x2 - x1, y2 - y1));
+                            linearGradientBrush.Dispose();
+                        }
                     }
                     break;
                 default: break;

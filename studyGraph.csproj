@@ -128,5 +128,11 @@
   <ItemGroup>
     <None Include="Resources\icons8-кончик-карандаша-16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Roller_Brush-80_icon-icons.com_57281.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-открыть-папку-161.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

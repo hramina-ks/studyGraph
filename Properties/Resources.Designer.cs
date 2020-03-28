@@ -143,6 +143,16 @@ namespace studyGraph.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icons8_открыть_папку_161 {
+            get {
+                object obj = ResourceManager.GetObject("icons8-открыть-папку-161", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icons8_палитра_16 {
             get {
                 object obj = ResourceManager.GetObject("icons8-палитра-16", resourceCulture);
@@ -216,6 +226,16 @@ namespace studyGraph.Properties {
         internal static System.Drawing.Bitmap icons8_файл_16 {
             get {
                 object obj = ResourceManager.GetObject("icons8-файл-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Roller_Brush_80_icon_icons_com_57281 {
+            get {
+                object obj = ResourceManager.GetObject("Roller_Brush-80_icon-icons.com_57281", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
